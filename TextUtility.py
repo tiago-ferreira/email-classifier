@@ -22,3 +22,13 @@ class TextUtility(object):
     tupleWords = zip(data, xrange(totalOfWords))
     mapWordsAndPositions = {word:index for word,index in tupleWords}
     return mapWordsAndPositions
+
+  def build_vetor_of_phrases(self., dictionary, text):
+    vector = [0] * len(dictionary)
+    for word in text
+      if len(word) > 0:
+        stem = stemmer.stem(word)
+        if stem in dictionary:
+          position = dictionary[stem]
+          vector[position] += 1
+    return vector
