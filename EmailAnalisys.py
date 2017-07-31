@@ -1,7 +1,7 @@
 #!-*- coding: utf8 -*-
 import numpy as np
 import pandas as pd
-import nltk
+from TextUtility import TextUtility
 from ReadFile import readEmail
 from PercentageConfig import PercentageConfig
 from DataToAnalisys import DataToAnalisys
@@ -28,12 +28,20 @@ class EmailAnalisys(object):
 
 if __name__ == '__main__':
 
-  X, Y = readEmail()
+  Xi, Yi = readEmail()
   results = {}
   classifier = EmailAnalisys()
   config = PercentageConfig(0.9,0.1)
-  data = DataToAnalisys(config, X, Y)
+  tu = TextUtility()
 
+  brokenText = tu.broken_text(Xi)
+  dictionary = tu.build_dictionary(brokenText)
+  mapWithPositions = tu.build_map_words_position(dictionary)
+  vectorOfPhrases = [tu.build_vetor_of_phrases(mapWithPositions, text) for text in brokenText]
+  X = np.array(vectorOfPhrases)
+  Y = np.array(Yi)
+
+  data = DataToAnalisys(config, X, Y)
   resultMultinomial = classifier.fitAndPredict(MultinomialNB(), data)
   results[resultMultinomial] = MultinomialNB()
   resultAdaBoost = classifier.fitAndPredict(AdaBoostClassifier(), data)

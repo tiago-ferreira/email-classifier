@@ -9,7 +9,7 @@ class TextUtility(object):
     return broken_text
 
   def build_dictionary(self, data):
-    stopwords = nltk.corpus.stopwords('portuguese')
+    stopwords = nltk.corpus.stopwords.words('portuguese')
     stemmer = nltk.stem.RSLPStemmer()
     dictionary = set()
     for value in data:
@@ -23,9 +23,10 @@ class TextUtility(object):
     mapWordsAndPositions = {word:index for word,index in tupleWords}
     return mapWordsAndPositions
 
-  def build_vetor_of_phrases(self., dictionary, text):
+  def build_vetor_of_phrases(self, dictionary, texts):
     vector = [0] * len(dictionary)
-    for word in text
+    stemmer = nltk.stem.RSLPStemmer()
+    for word in texts:
       if len(word) > 0:
         stem = stemmer.stem(word)
         if stem in dictionary:
